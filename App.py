@@ -25,6 +25,7 @@ class DocumentTool:
 
         # Form Fields
         self.name_var = tk.StringVar()
+        self.search_var = tk.StringVar()
 
         self.create_form()
         self.create_table()
@@ -40,14 +41,22 @@ class DocumentTool:
 
         tk.Button(self.root, text="Submit", command=self.submit_document).grid(row=2, column=0, pady=10)
 
+        # Search Field
+        tk.Label(self.root, text="Search by Name:").grid(row=2, column=1, padx=10)
+        tk.Entry(self.root, textvariable=self.search_var).grid(row=2, column=2, padx=10)
+        tk.Button(self.root, text="Search", command=self.search_document).grid(row=2, column=3, padx=10)
+
+        # Delete Button
+        tk.Button(self.root, text="Delete Selected", command=self.delete_document).grid(row=2, column=4, padx=10)
+
     def create_table(self):
         self.tree = ttk.Treeview(self.root, columns=("ID", "Name"), show='headings')
         self.tree.heading("ID", text="ID")
         self.tree.heading("Name", text="Name")
-        self.tree.grid(row=3, column=0, columnspan=3, padx=10, pady=10, sticky='nsew')
+        self.tree.grid(row=3, column=0, columnspan=5, padx=10, pady=10, sticky='nsew')
 
         self.scroll_y = ttk.Scrollbar(self.root, orient="vertical", command=self.tree.yview)
-        self.scroll_y.grid(row=3, column=3, sticky='ns')
+        self.scroll_y.grid(row=3, column=5, sticky='ns')
         self.tree.configure(yscrollcommand=self.scroll_y.set)
 
         self.root.grid_rowconfigure(3, weight=1)
@@ -58,7 +67,7 @@ class DocumentTool:
         c.execute('''
             INSERT INTO documents (name)
             VALUES (?)
-        ''', (self.name_var.get(),))  # Fix here: make it a tuple
+        ''', (self.name_var.get(),))
         conn.commit()
         conn.close()
         messagebox.showinfo("Success", "Document submitted successfully!")
@@ -68,7 +77,7 @@ class DocumentTool:
         # Clear existing data in the tree
         for row in self.tree.get_children():
             self.tree.delete(row)
-        
+
         conn = sqlite3.connect('documents.db')
         c = conn.cursor()
         c.execute('SELECT * FROM documents')
@@ -77,6 +86,39 @@ class DocumentTool:
 
         for row in rows:
             self.tree.insert("", tk.END, values=row)
+
+    def search_document(self):
+        search_term = self.search_var.get()
+        for row in self.tree.get_children():
+            self.tree.delete(row)
+
+        conn = sqlite3.connect('documents.db')
+        c = conn.cursor()
+        c.execute('SELECT * FROM documents WHERE name LIKE ?', ('%' + search_term + '%',))
+        rows = c.fetchall()
+        conn.close()
+
+        for row in rows:
+            self.tree.insert("", tk.END, values=row)
+
+        if not rows:
+            messagebox.showinfo("No Results", "No documents found for that name.")
+
+    def delete_document(self):
+        selected_item = self.tree.selection()
+        if not selected_item:
+            messagebox.showwarning("Select Item", "Please select a document to delete.")
+            return
+        
+        item_id = self.tree.item(selected_item)["values"][0]
+
+        conn = sqlite3.connect('documents.db')
+        c = conn.cursor()
+        c.execute('DELETE FROM documents WHERE id = ?', (item_id,))
+        conn.commit()
+        conn.close()
+        messagebox.showinfo("Deleted", "Document deleted successfully!")
+        self.populate_table()
 
 if __name__ == "__main__":
     root = tk.Tk()
