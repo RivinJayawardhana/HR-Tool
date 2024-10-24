@@ -8,7 +8,7 @@ def create_database():
     c.execute('''
         CREATE TABLE IF NOT EXISTS documents (
             id INTEGER PRIMARY KEY,
-            name TEXT,
+            name TEXT
         )
     ''')
     conn.commit()
@@ -25,28 +25,32 @@ class DocumentTool:
 
         # Form Fields
         self.name_var = tk.StringVar()
-    
 
         self.create_form()
-
-
-
-
+        self.create_table()
+        self.populate_table()
 
     def create_form(self):
-        labels = [
-            "Name"
-        ]
-        variables = [
-            self.name_var
-        ]
+        labels = ["Name"]
+        variables = [self.name_var]
 
         for i, (label, var) in enumerate(zip(labels, variables)):
-            tk.Label(self.root, text=label).grid(row=i, column=0, padx=10, pady=5)
-            tk.Entry(self.root, textvariable=var).grid(row=i, column=1, padx=10, pady=5)
+            tk.Label(self.root, text=label).grid(row=i, column=0, padx=40, pady=25)
+            tk.Entry(self.root, textvariable=var).grid(row=i, column=1, padx=40, pady=25)
 
-        tk.Button(self.root, text="Submit", command=self.submit_document).grid(row=8, column=0, pady=10)
+        tk.Button(self.root, text="Submit", command=self.submit_document).grid(row=2, column=0, pady=10)
 
+    def create_table(self):
+        self.tree = ttk.Treeview(self.root, columns=("ID", "Name"), show='headings')
+        self.tree.heading("ID", text="ID")
+        self.tree.heading("Name", text="Name")
+        self.tree.grid(row=3, column=0, columnspan=3, padx=10, pady=10, sticky='nsew')
+
+        self.scroll_y = ttk.Scrollbar(self.root, orient="vertical", command=self.tree.yview)
+        self.scroll_y.grid(row=3, column=3, sticky='ns')
+        self.tree.configure(yscrollcommand=self.scroll_y.set)
+
+        self.root.grid_rowconfigure(3, weight=1)
 
     def submit_document(self):
         conn = sqlite3.connect('documents.db')
@@ -54,7 +58,7 @@ class DocumentTool:
         c.execute('''
             INSERT INTO documents (name)
             VALUES (?)
-        ''', (self.name_var.get()))
+        ''', (self.name_var.get(),))  # Fix here: make it a tuple
         conn.commit()
         conn.close()
         messagebox.showinfo("Success", "Document submitted successfully!")
@@ -74,25 +78,6 @@ class DocumentTool:
         for row in rows:
             self.tree.insert("", tk.END, values=row)
 
-    def search_document(self):
-        name = self.search_var.get()
-        conn = sqlite3.connect('documents.db')
-        c = conn.cursor()
-        c.execute('SELECT * FROM documents WHERE name = ?', (name,))
-        result = c.fetchall()
-        conn.close()
-
-        # Clear existing data in the tree
-        for row in self.tree.get_children():
-            self.tree.delete(row)
-
-        if result:
-            for row in result:
-                self.tree.insert("", tk.END, values=row)
-        else:
-            messagebox.showwarning("Not Found", "No documents found for that name.")
-
-     
 if __name__ == "__main__":
     root = tk.Tk()
     app = DocumentTool(root)
