@@ -64,15 +64,20 @@ button:hover {
     text-align: center;
 }
 
-.user-list {
+.user-selection {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.user-docs {
     margin-top: 20px;
 }
 
-.user-list ul {
+.user-docs ul {
     list-style-type: none;
 }
 
-.user-list li {
+.user-docs li {
     background: #f8f9fa;
     border-radius: 5px;
     padding: 10px;
@@ -80,7 +85,7 @@ button:hover {
     transition: background-color 0.3s;
 }
 
-.user-list li:hover {
+.user-docs li:hover {
     background: #e2e6ea;
 }
 

@@ -28,22 +28,11 @@ document.getElementById('add-user-btn')?.addEventListener('click', function() {
         users.push(newUser);
         document.getElementById('new-user-name').value = '';
         document.getElementById('new-user-password').value = '';
-        updateUserList();
         updateUserSelect();
     } else {
         alert('Please enter both username and password');
     }
 });
-
-function updateUserList() {
-    const userList = document.getElementById('user-list');
-    userList.innerHTML = '';
-    users.forEach(user => {
-        const li = document.createElement('li');
-        li.textContent = user.username;
-        userList.appendChild(li);
-    });
-}
 
 function updateUserSelect() {
     const userSelect = document.getElementById('user-select');
@@ -78,6 +67,7 @@ document.getElementById('submission-form')?.addEventListener('submit', function(
     const documentName = document.getElementById('document-name').value.trim();
     const documentDetails = document.getElementById('document-details').value.trim();
     
+    // Simulate the logged-in user (in a real application, you would use session management)
     const currentUser = users.find(user => user.username === 'currentUser'); // Replace with actual logic
     if (currentUser) {
         currentUser.documents.push(`${documentName}: ${documentDetails}`);
