@@ -1,5 +1,5 @@
 const formSteps = [
-    { name: 'Form A', details: '', pdf: null, status: 'Pending' },
+    { name: 'PERSONAL HISTORY FORM', details: '', pdf: null, status: 'Pending' },
     { name: 'Form B', details: '', pdf: null, status: 'Pending' },
     { name: 'Form C', details: '', pdf: null, status: 'Pending' },
     { name: 'Form D', details: '', pdf: null, status: 'Pending' },
