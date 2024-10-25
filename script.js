@@ -6,16 +6,23 @@ document.addEventListener("DOMContentLoaded", function() {
     ];
 
     const userSelect = document.getElementById('user-select');
+    const newUserNameInput = document.getElementById('new-user-name');
+    const addUserBtn = document.getElementById('add-user-btn');
     const submittedList = document.getElementById('submitted-docs');
     const pendingList = document.getElementById('pending-docs');
 
     // Populate the user selection dropdown
-    users.forEach(user => {
-        const option = document.createElement('option');
-        option.value = user.id;
-        option.textContent = user.name;
-        userSelect.appendChild(option);
-    });
+    function populateUserSelect() {
+        userSelect.innerHTML = '<option value="">--Select a user--</option>'; // Reset dropdown
+        users.forEach(user => {
+            const option = document.createElement('option');
+            option.value = user.id;
+            option.textContent = user.name;
+            userSelect.appendChild(option);
+        });
+    }
+
+    populateUserSelect();
 
     userSelect.addEventListener('change', function() {
         const selectedUserId = parseInt(this.value);
@@ -37,6 +44,18 @@ document.addEventListener("DOMContentLoaded", function() {
                 li.textContent = doc;
                 pendingList.appendChild(li);
             });
+        }
+    });
+
+    addUserBtn.addEventListener('click', function() {
+        const userName = newUserNameInput.value.trim();
+        if (userName) {
+            const newUserId = users.length + 1;
+            users.push({ id: newUserId, name: userName, submitted: [], pending: [] });
+            populateUserSelect();
+            newUserNameInput.value = ''; // Clear input
+        } else {
+            alert('Please enter a valid user name.');
         }
     });
 });
