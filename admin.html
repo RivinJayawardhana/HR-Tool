@@ -16,9 +16,15 @@
             <input type="password" id="new-user-password" placeholder="Enter password">
             <button id="add-user-btn">Add User</button>
         </div>
-        <div class="user-list">
-            <h2>Users</h2>
-            <ul id="user-list"></ul>
+        <div class="user-selection">
+            <label for="user-select">Select User:</label>
+            <select id="user-select">
+                <option value="">--Select a user--</option>
+            </select>
+        </div>
+        <div class="user-docs">
+            <h2>User Submitted Documents</h2>
+            <ul id="user-docs-list"></ul>
         </div>
     </div>
     <script src="script.js"></script>
