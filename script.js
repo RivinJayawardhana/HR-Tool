@@ -1,26 +1,34 @@
 const users = [
-    { id: 1, name: "John Doe", documents: ["Form A", "Form B"] },
-    { id: 2, name: "Jane Smith", documents: ["Form C", "Form D"] },
-    { id: 3, name: "Alice Johnson", documents: ["Form E"] },
+    {
+        id: 1,
+        name: "John Doe",
+        forms: {
+            "Form A": "submitted",
+            "Form B": "pending",
+            "Form C": "submitted"
+        }
+    },
+    {
+        id: 2,
+        name: "Jane Smith",
+        forms: {
+            "Form A": "pending",
+            "Form B": "submitted",
+            "Form C": "pending"
+        }
+    },
+    {
+        id: 3,
+        name: "Alice Johnson",
+        forms: {
+            "Form A": "submitted",
+            "Form B": "submitted",
+            "Form C": "pending"
+        }
+    },
 ];
 
-document.getElementById('add-user-btn').addEventListener('click', addUser);
 const userSelect = document.getElementById('user-select');
-
-function addUser() {
-    const username = document.getElementById('new-user-name').value;
-    const password = document.getElementById('new-user-password').value;
-
-    if (username && password) {
-        const newUser = { id: users.length + 1, name: username, documents: [] };
-        users.push(newUser);
-        populateUserSelect();
-        document.getElementById('new-user-name').value = '';
-        document.getElementById('new-user-password').value = '';
-    } else {
-        alert("Please fill in all fields.");
-    }
-}
 
 function populateUserSelect() {
     userSelect.innerHTML = '<option value="">--Select a user--</option>';
@@ -32,47 +40,36 @@ function populateUserSelect() {
     });
 }
 
-function displayUserDocs() {
+function displayUserForms() {
     const selectedUserId = userSelect.value;
-    const userDocsList = document.getElementById('user-docs-list');
-    userDocsList.innerHTML = '';
+    const formStatus = document.getElementById('form-status');
+    formStatus.innerHTML = '';
 
     if (selectedUserId) {
         const user = users.find(u => u.id == selectedUserId);
-        user.documents.forEach(doc => {
-            const li = document.createElement('li');
-            li.textContent = doc;
-            userDocsList.appendChild(li);
-        });
-    }
-}
+        for (const [formName, status] of Object.entries(user.forms)) {
+            const formHeading = document.createElement('h3');
+            formHeading.textContent = formName;
 
-// Filter users based on input
-function filterUsers() {
-    const searchInput = document.getElementById('search-user').value.toLowerCase();
-    const filteredUsers = users.filter(user => user.name.toLowerCase().includes(searchInput));
-    userSelect.innerHTML = '<option value="">--Select a user--</option>';
-    filteredUsers.forEach(user => {
-        const option = document.createElement('option');
-        option.value = user.id;
-        option.textContent = user.name;
-        userSelect.appendChild(option);
-    });
-}
+            if (status === "submitted") {
+                formHeading.classList.add("submitted");
+            } else {
+                formHeading.classList.add("pending");
+            }
 
-// Filter documents based on input
-function filterDocuments() {
-    const searchInput = document.getElementById('search-doc').value.toLowerCase();
-    const userDocsList = document.getElementById('user-docs-list').children;
-
-    for (let li of userDocsList) {
-        if (li.textContent.toLowerCase().includes(searchInput)) {
-            li.style.display = '';
-        } else {
-            li.style.display = 'none';
+            formStatus.appendChild(formHeading);
         }
     }
 }
 
 // Initialize user select on page load
 window.onload = populateUserSelect;
+
+// Sidebar navigation functions
+function showAddUser() {
+    alert("Add User functionality not implemented in this example.");
+}
+
+function showUserDocs() {
+    alert("View User Documents functionality not implemented in this example.");
+}
