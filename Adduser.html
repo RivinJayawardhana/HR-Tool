@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Admin Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Sidebar Styles */
+        .sidebar {
+            width: 200px;
+            height: 100vh;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            position: fixed;
+        }
+
+        .sidebar h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul li button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            background-color: #34495e;
+            border: none;
+            color: #ecf0f1;
+            cursor: pointer;
+            transition: background 0.3s;
+            border-radius: 4px;
+        }
+
+        .sidebar ul li button:hover {
+            background-color: #1abc9c;
+        }
+
+        /* Login Form Styles */
+        .login-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            background-color: #ecf0f1;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .login-container label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+            color: #34495e;
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            font-size: 1em;
+            color: #2c3e50;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            background-color: #1abc9c;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .login-container button:hover {
+            background-color: #16a085;
+        }
+
+        /* Show login form on top */
+        .show {
+            display: block !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Admin Menu</h2>
+        <ul>
+            <li><button onclick="window.location.href='admin.html'">Add User</button></li>
+            <li><button  onclick="window.location.href='Adduser.html'">View User Documents</button></li>
+        </ul>
+    </div>
+
+    <!-- Login Form -->
+    <div class="login-container" id="login-form">
+        <h2>Add users</h2>
+        <form onsubmit="return false;">
+            <label for="username">Full Name:</label>
+            <input type="text" id="username" placeholder="Enter username" required>
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter username" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter password" required>
+            <label for="password">Contact No:</label>
+            <input type="password" id="password" placeholder="Enter password" required>
+            <label for="password">Address</label>
+            <input type="password" id="password" placeholder="Enter password" required>
+          
+            
+            <button type="submit" onclick="login()">Add</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Show login form on page load
+        document.getElementById("login-form").classList.add("show");
+
+        function login() {
+            // Here you would add authentication logic
+            alert("Login successful!");
+            document.getElementById("login-form").classList.remove("show");
+        }
+
+        function showAddUser() {
+            alert("Redirecting to Add User page");
+        }
+
+        function showUserDocs() {
+            alert("Redirecting to User Documents page");
+        }
+    </script>
+</body>
+</html>
