@@ -77,3 +77,69 @@ document.getElementById('submission-form').addEventListener('submit', function(e
     document.getElementById('document-upload').value = '';
     updateSubmittedDocs(); // Update the submitted documents list
 });
+
+// Existing code...
+
+// Handle form submission
+document.getElementById('submission-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const details = document.getElementById('document-details').value;
+    const pdfFile = document.getElementById('document-upload').files[0];
+
+    // Store the details and PDF file
+    formSteps[currentStep].details = details;
+    formSteps[currentStep].pdf = pdfFile;
+    formSteps[currentStep].status = 'Submitted'; // Update status to Submitted
+
+    // Move to the next form
+    currentStep++;
+    if (currentStep < formSteps.length) {
+        displayCurrentForm();
+    } else {
+        showSuccessModal(); // Show success modal after all forms are submitted
+    }
+
+    // Clear input fields
+    document.getElementById('document-name').value = '';
+    document.getElementById('document-details').value = '';
+    document.getElementById('additional-info-1').value = '';
+    document.getElementById('additional-info-2').value = '';
+    document.getElementById('document-upload').value = '';
+    updateSubmittedDocs(); // Update the submitted documents list
+});
+
+// Show success modal
+function showSuccessModal() {
+    const modal = document.getElementById('success-modal');
+    const summaryList = document.getElementById('submitted-summary');
+    summaryList.innerHTML = ''; // Clear previous summary
+
+    // Populate summary with submitted documents
+    formSteps.forEach(step => {
+        if (step.status === 'Submitted') {
+            const li = document.createElement('li');
+            li.textContent = `${step.name}: Submitted`;
+            summaryList.appendChild(li);
+        }
+    });
+
+    modal.style.display = 'block'; // Show the modal
+}
+
+// Close modal functionality
+document.querySelector('.close-button').onclick = function() {
+    document.getElementById('success-modal').style.display = 'none';
+}
+
+document.getElementById('modal-close-btn').onclick = function() {
+    document.getElementById('success-modal').style.display = 'none';
+}
+
+// Close modal when clicking outside of the modal
+window.onclick = function(event) {
+    const modal = document.getElementById('success-modal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+}
