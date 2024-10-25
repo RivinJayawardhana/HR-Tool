@@ -3,27 +3,27 @@ const users = [
         id: 1,
         name: "John Doe",
         forms: {
-            "Form A": "submitted",
-            "Form B": "pending",
-            "Form C": "submitted"
+            "Form A - submitted": { status: "submitted", content: "This is the content of Form A submitted by John Doe." },
+            "Form B - pending": { status: "pending", content: "" },
+            "Form C - submitted": { status: "submitted", content: "This is the content of Form C submitted by John Doe." }
         }
     },
     {
         id: 2,
         name: "Jane Smith",
         forms: {
-            "Form A": "pending",
-            "Form B": "submitted",
-            "Form C": "pending"
+            "Form A - pending ": { status: "pending", content: "" },
+            "Form B - submitted": { status: "submitted", content: "This is the content of Form B submitted by Jane Smith." },
+            "Form C - pending": { status: "pending", content: "" }
         }
     },
     {
         id: 3,
         name: "Alice Johnson",
         forms: {
-            "Form A": "submitted",
-            "Form B": "submitted",
-            "Form C": "pending"
+            "Form A - submitted ": { status: "submitted", content: "This is the content of Form A submitted by Alice Johnson." },
+            "Form B - submitted": { status: "submitted", content: "This is the content of Form B submitted by Alice Johnson." },
+            "Form C - pending": { status: "pending", content: "" }
         }
     },
 ];
@@ -47,19 +47,34 @@ function displayUserForms() {
 
     if (selectedUserId) {
         const user = users.find(u => u.id == selectedUserId);
-        for (const [formName, status] of Object.entries(user.forms)) {
+        for (const [formName, details] of Object.entries(user.forms)) {
+            const formDiv = document.createElement('div');
             const formHeading = document.createElement('h3');
             formHeading.textContent = formName;
 
-            if (status === "submitted") {
+            if (details.status === "submitted") {
                 formHeading.classList.add("submitted");
+                const downloadLink = document.createElement('button');
+                downloadLink.textContent = "Download PDF";
+                downloadLink.onclick = () => downloadPDF(formName, details.content);
+                formDiv.appendChild(formHeading);
+                formDiv.appendChild(downloadLink);
             } else {
                 formHeading.classList.add("pending");
+                formDiv.appendChild(formHeading);
             }
 
-            formStatus.appendChild(formHeading);
+            formStatus.appendChild(formDiv);
         }
     }
+}
+
+// Function to download PDF
+function downloadPDF(formName, content) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.text(content, 10, 10);
+    doc.save(`${formName}.pdf`);
 }
 
 // Initialize user select on page load
