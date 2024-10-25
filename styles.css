@@ -21,6 +21,16 @@ header {
     margin-bottom: 20px;
 }
 
+.user-selection {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.user-selection select {
+    padding: 10px;
+    font-size: 16px;
+}
+
 .card {
     background: white;
     border-radius: 8px;
