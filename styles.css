@@ -26,9 +26,22 @@ header {
     text-align: center;
 }
 
-.user-selection select {
+.user-selection select,
+.add-user input {
     padding: 10px;
     font-size: 16px;
+    margin-right: 10px;
+}
+
+.add-user {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.add-user button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .card {
