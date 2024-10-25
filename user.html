@@ -131,10 +131,32 @@
                 </div>
                 <button type="submit">Submit </button>
             </form>
-            <div class="document-status">
-                <h2>Submitted Documents</h2>
-                <ul id="submitted-docs"></ul>
-            </div>
+               <!-- Submitted Documents Section -->
+        <div class="document-status">
+            <h2>Submitted Documents</h2>
+            <ul id="submitted-docs" style="list-style-type: none; padding: 0;">
+                <!-- Document Item -->
+                <li style="padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-weight: bold; color: #0066cc;">Personal History Form </span>
+        
+                    <div>
+                        <button style="background-color: #4CAF50; color: white; border: none; padding: 5px 10px; margin-right: 5px; border-radius: 3px; cursor: pointer;">Edit</button>
+                        <button style="background-color: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Delete</button>
+                    </div>
+                </li>
+
+                <!-- Additional Document Items (Duplicate as needed) -->
+                <li style="padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-weight: bold; color: #0066cc;">Form 2 </span>
+                    <div>
+                        <button style="background-color: #4CAF50; color: white; border: none; padding: 5px 10px; margin-right: 5px; border-radius: 3px; cursor: pointer;">Edit</button>
+                        <button style="background-color: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Delete</button>
+                    </div>
+                </li>
+
+                <!-- Repeat list items as needed -->
+            </ul>
+        </div>
         </div>
     </div>
 
@@ -147,6 +169,7 @@
             <button id="modal-close-btn">Close</button>
         </div>
     </div>
+    
 
     <script src="user-script.js"></script>
 </body>
