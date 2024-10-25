@@ -23,8 +23,35 @@ h1 {
     color: #333;
 }
 
+.step-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.step {
+    padding: 10px 15px;
+    border: 2px solid #007bff;
+    border-radius: 4px;
+    background-color: #e7f1ff;
+    color: #007bff;
+    font-weight: bold;
+    margin: 0 5px;
+}
+
+.arrow {
+    font-size: 24px;
+    color: #007bff;
+}
+
 .form-section {
     margin-top: 20px;
+}
+
+.form-fields {
+    display: flex;
+    flex-direction: column;
 }
 
 input[type="text"],
@@ -40,7 +67,7 @@ input[type="file"] {
 button {
     width: 100%;
     padding: 10px;
-    background-color: #0056b3;
+    background-color: #28a745;
     border: none;
     color: white;
     font-size: 16px;
@@ -49,7 +76,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #218838;
 }
 
 .document-status {
@@ -66,4 +93,9 @@ button:hover {
     margin: 5px 0;
     padding: 10px;
     border-radius: 4px;
+}
+
+#submitted-docs li {
+    display: flex;
+    justify-content: space-between;
 }

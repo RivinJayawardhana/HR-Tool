@@ -18,6 +18,8 @@ function displayCurrentForm() {
     formSection.querySelector('#document-name').value = formSteps[currentStep].name;
     formSection.querySelector('#document-details').value = formSteps[currentStep].details;
     updateSubmittedDocs(); // Update the document list every time the form is displayed
+    document.getElementById('current-form-name').textContent = `Fill Out ${formSteps[currentStep].name}`; // Update form title
+    updateArrowColors(); // Update arrow colors
 }
 
 // Update the displayed submitted documents
@@ -32,6 +34,18 @@ function updateSubmittedDocs() {
         li.style.color = step.status === 'Submitted' ? 'green' : 'red'; // Color based on status
         submittedDocsList.appendChild(li);
     });
+}
+
+// Update arrow colors based on the step status
+function updateArrowColors() {
+    for (let i = 1; i <= formSteps.length; i++) {
+        const arrow = document.getElementById(`arrow-${i}`);
+        if (i <= currentStep + 1) {
+            arrow.style.color = 'green'; // Change to green for completed steps
+        } else {
+            arrow.style.color = 'red'; // Change to red for pending steps
+        }
+    }
 }
 
 // Handle form submission
@@ -52,13 +66,14 @@ document.getElementById('submission-form').addEventListener('submit', function(e
         displayCurrentForm();
     } else {
         alert('All forms submitted!');
-        // Optionally, you can send the data to the server here
         console.log(formSteps);
     }
 
     // Clear input fields
     document.getElementById('document-name').value = '';
     document.getElementById('document-details').value = '';
+    document.getElementById('additional-info-1').value = '';
+    document.getElementById('additional-info-2').value = '';
     document.getElementById('document-upload').value = '';
     updateSubmittedDocs(); // Update the submitted documents list
 });

@@ -11,12 +11,27 @@
         <header>
             <h1>User Dashboard</h1>
         </header>
+        <div class="step-indicator">
+            <div class="step" id="step-1">Step 1</div>
+            <div class="arrow" id="arrow-1">→</div>
+            <div class="step" id="step-2">Step 2</div>
+            <div class="arrow" id="arrow-2">→</div>
+            <div class="step" id="step-3">Step 3</div>
+            <div class="arrow" id="arrow-3">→</div>
+            <div class="step" id="step-4">Step 4</div>
+            <div class="arrow" id="arrow-4">→</div>
+            <div class="step" id="step-5">Step 5</div>
+        </div>
         <div class="form-section">
-            <h2>Fill Out Forms</h2>
+            <h2 id="current-form-name">Fill Out Form A</h2>
             <form id="submission-form" enctype="multipart/form-data">
-                <input type="text" id="document-name" placeholder="Document Name" required>
-                <textarea id="document-details" placeholder="Details" required></textarea>
-                <input type="file" id="document-upload" accept="application/pdf" required>
+                <div class="form-fields">
+                    <input type="text" id="document-name" placeholder="Document Name" required>
+                    <textarea id="document-details" placeholder="Details" required></textarea>
+                    <input type="text" id="additional-info-1" placeholder="Additional Info 1" required>
+                    <input type="text" id="additional-info-2" placeholder="Additional Info 2" required>
+                    <input type="file" id="document-upload" accept="application/pdf" required>
+                </div>
                 <button type="submit">Submit Document</button>
             </form>
             <div class="document-status">
