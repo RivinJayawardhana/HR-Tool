@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="user-styles.css">
     <title>User Dashboard</title>
 </head>
 <body>
@@ -13,9 +13,10 @@
         </header>
         <div class="form-section">
             <h2>Fill Out Forms</h2>
-            <form id="submission-form">
+            <form id="submission-form" enctype="multipart/form-data">
                 <input type="text" id="document-name" placeholder="Document Name" required>
                 <textarea id="document-details" placeholder="Details" required></textarea>
+                <input type="file" id="document-upload" accept="application/pdf" required>
                 <button type="submit">Submit Document</button>
             </form>
             <div class="document-status">
@@ -24,6 +25,6 @@
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="user-script.js"></script>
 </body>
 </html>
