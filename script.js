@@ -24,11 +24,12 @@ document.getElementById('add-user-btn')?.addEventListener('click', function() {
     const password = document.getElementById('new-user-password').value.trim();
     
     if (username && password) {
-        const newUser = { username, password, role: 'user' };
+        const newUser = { username, password, role: 'user', documents: [] };
         users.push(newUser);
         document.getElementById('new-user-name').value = '';
         document.getElementById('new-user-password').value = '';
         updateUserList();
+        updateUserSelect();
     } else {
         alert('Please enter both username and password');
     }
@@ -44,19 +45,43 @@ function updateUserList() {
     });
 }
 
+function updateUserSelect() {
+    const userSelect = document.getElementById('user-select');
+    userSelect.innerHTML = '<option value="">--Select a user--</option>'; // Reset dropdown
+    users.forEach(user => {
+        const option = document.createElement('option');
+        option.value = user.username;
+        option.textContent = user.username;
+        userSelect.appendChild(option);
+    });
+}
+
+// Handle user selection to display their submitted documents
+document.getElementById('user-select')?.addEventListener('change', function() {
+    const selectedUsername = this.value;
+    const userDocsList = document.getElementById('user-docs-list');
+    userDocsList.innerHTML = ''; // Clear previous documents
+
+    const selectedUser = users.find(user => user.username === selectedUsername);
+    if (selectedUser) {
+        selectedUser.documents.forEach(doc => {
+            const li = document.createElement('li');
+            li.textContent = doc;
+            userDocsList.appendChild(li);
+        });
+    }
+});
+
 // User submission form
 document.getElementById('submission-form')?.addEventListener('submit', function(event) {
     event.preventDefault();
     const documentName = document.getElementById('document-name').value.trim();
     const documentDetails = document.getElementById('document-details').value.trim();
-
-    if (documentName && documentDetails) {
-        const li = document.createElement('li');
-        li.textContent = `${documentName}: ${documentDetails}`;
-        document.getElementById('submitted-docs').appendChild(li);
+    
+    const currentUser = users.find(user => user.username === 'currentUser'); // Replace with actual logic
+    if (currentUser) {
+        currentUser.documents.push(`${documentName}: ${documentDetails}`);
         document.getElementById('document-name').value = '';
         document.getElementById('document-details').value = '';
-    } else {
-        alert('Please fill out all fields');
     }
 });
