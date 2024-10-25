@@ -1,61 +1,62 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const users = [
-        { id: 1, name: "User A", submitted: ["Form A1", "Form A2"], pending: ["Form A3"] },
-        { id: 2, name: "User B", submitted: ["Form B1"], pending: [] },
-        { id: 3, name: "User C", submitted: ["Form C1", "Form C2"], pending: ["Form C3"] }
-    ];
+const users = []; // Store users in memory for demo purposes
 
-    const userSelect = document.getElementById('user-select');
-    const newUserNameInput = document.getElementById('new-user-name');
-    const addUserBtn = document.getElementById('add-user-btn');
-    const submittedList = document.getElementById('submitted-docs');
-    const pendingList = document.getElementById('pending-docs');
+// Handle login
+document.getElementById('login-form')?.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-    // Populate the user selection dropdown
-    function populateUserSelect() {
-        userSelect.innerHTML = '<option value="">--Select a user--</option>'; // Reset dropdown
-        users.forEach(user => {
-            const option = document.createElement('option');
-            option.value = user.id;
-            option.textContent = user.name;
-            userSelect.appendChild(option);
-        });
-    }
-
-    populateUserSelect();
-
-    userSelect.addEventListener('change', function() {
-        const selectedUserId = parseInt(this.value);
-        const selectedUser = users.find(user => user.id === selectedUserId);
-
-        // Clear previous lists
-        submittedList.innerHTML = '';
-        pendingList.innerHTML = '';
-
-        if (selectedUser) {
-            selectedUser.submitted.forEach(doc => {
-                const li = document.createElement('li');
-                li.textContent = doc;
-                submittedList.appendChild(li);
-            });
-
-            selectedUser.pending.forEach(doc => {
-                const li = document.createElement('li');
-                li.textContent = doc;
-                pendingList.appendChild(li);
-            });
-        }
-    });
-
-    addUserBtn.addEventListener('click', function() {
-        const userName = newUserNameInput.value.trim();
-        if (userName) {
-            const newUserId = users.length + 1;
-            users.push({ id: newUserId, name: userName, submitted: [], pending: [] });
-            populateUserSelect();
-            newUserNameInput.value = ''; // Clear input
+    const user = users.find(u => u.username === username && u.password === password);
+    if (user) {
+        if (user.role === 'admin') {
+            window.location.href = 'admin.html'; // Redirect to admin dashboard
         } else {
-            alert('Please enter a valid user name.');
+            window.location.href = 'user.html'; // Redirect to user dashboard
         }
+    } else {
+        document.getElementById('error-message').textContent = 'Invalid credentials';
+    }
+});
+
+// Admin functionality
+document.getElementById('add-user-btn')?.addEventListener('click', function() {
+    const username = document.getElementById('new-user-name').value.trim();
+    const password = document.getElementById('new-user-password').value.trim();
+    
+    if (username && password) {
+        const newUser = { username, password, role: 'user' };
+        users.push(newUser);
+        document.getElementById('new-user-name').value = '';
+        document.getElementById('new-user-password').value = '';
+        updateUserList();
+    } else {
+        alert('Please enter both username and password');
+    }
+});
+
+function updateUserList() {
+    const userList = document.getElementById('user-list');
+    userList.innerHTML = '';
+    users.forEach(user => {
+        const li = document.createElement('li');
+        li.textContent = user.username;
+        userList.appendChild(li);
     });
+}
+
+// User submission form
+document.getElementById('submission-form')?.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const documentName = document.getElementById('document-name').value.trim();
+    const documentDetails = document.getElementById('document-details').value.trim();
+
+    if (documentName && documentDetails) {
+        const li = document.createElement('li');
+        li.textContent = `${documentName}: ${documentDetails}`;
+        document.getElementById('submitted-docs').appendChild(li);
+        document.getElementById('document-name').value = '';
+        document.getElementById('document-details').value = '';
+    } else {
+        alert('Please fill out all fields');
+    }
 });
