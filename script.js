@@ -1,7 +1,7 @@
 const users = [
     {
         id: 1,
-        name: "John Doe",
+        name: "User 1",
         forms: {
             "Form A - submitted": { status: "submitted", content: "This is the content of Form A submitted by John Doe." },
             "Form B - pending": { status: "pending", content: "" },
@@ -10,7 +10,7 @@ const users = [
     },
     {
         id: 2,
-        name: "Jane Smith",
+        name: "User 2",
         forms: {
             "Form A - pending ": { status: "pending", content: "" },
             "Form B - submitted": { status: "submitted", content: "This is the content of Form B submitted by Jane Smith." },
@@ -19,7 +19,7 @@ const users = [
     },
     {
         id: 3,
-        name: "Alice Johnson",
+        name: "User 3",
         forms: {
             "Form A - submitted ": { status: "submitted", content: "This is the content of Form A submitted by Alice Johnson." },
             "Form B - submitted": { status: "submitted", content: "This is the content of Form B submitted by Alice Johnson." },
@@ -54,11 +54,17 @@ function displayUserForms() {
 
             if (details.status === "submitted") {
                 formHeading.classList.add("submitted");
-                const downloadLink = document.createElement('button');
+                const downloadLink = document.createElement('button')
+                const edit = document.createElement('button')
+                const delet = document.createElement('button');
+                edit.textContent = "Delete";
+                delet.textContent = "Edit";
                 downloadLink.textContent = "Download PDF";
                 downloadLink.onclick = () => downloadPDF(formName, details.content);
                 formDiv.appendChild(formHeading);
                 formDiv.appendChild(downloadLink);
+                formDiv.appendChild(edit);
+                formDiv.appendChild(delet);
             } else {
                 formHeading.classList.add("pending");
                 formDiv.appendChild(formHeading);
